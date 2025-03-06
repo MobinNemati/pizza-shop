@@ -1,4 +1,15 @@
+# general modules
 asgiref==3.8.1
 Django==4.2
 sqlparse==0.5.1
 tzdata==2024.1
+python-decouple
+pillow
+djangorestframework==3.14
+
+
+
+# third party modules
+markdown
+django-filter  
+drf-yasg==1.21.8

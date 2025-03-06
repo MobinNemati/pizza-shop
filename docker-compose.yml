@@ -1,0 +1,15 @@
+version: '3.9'
+
+
+services:
+  backend:
+    build: .
+    container_name: pizza-shop
+    command: python manage.py runserver 0.0.0.0:7000
+    volumes:
+      - ./core:/app
+    ports:
+      - '7000:7000'
+    environment:
+      - SECRET_KEY=django-insecure-6jij(btfq1+e#ju38@9-#5b*gv+*3ni^d%qmo(u2yyzzwsej6$
+      - DEBUG=True

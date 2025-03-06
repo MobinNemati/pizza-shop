@@ -1,0 +1,41 @@
+{% load static %}
+{% load humanize %}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<div class="container">
+    <div class="row justify-content-center mb-5 pb-3">
+        <div class="col-md-7 heading-section ftco-animate text-center">
+            <h2 class="mb-4">Popular Item</h2>
+        </div>
+    </div>
+</div>
+<div class="container-wrap">
+    <div class="row no-gutters d-flex">
+        {% for item in items %}
+        <div class="col-lg-4 d-flex ftco-animate">
+            <div class="services-wrap d-flex">
+                {% if forloop.counter <= 3 %}
+                <a href="#" class="img" style="background-image: url('{{ item.image.url }}');"></a>
+                <div class="text p-4">
+                    <h3>{{ item.name }} - {{ item.score }} ⭐</h3>
+                    <p>{{ item.material }}</p>
+                    <p class="price"><span>{{ item.price|intcomma }}</span> 
+                        <a href="#" class="ml-2 btn btn-white btn-outline-white">Order</a>
+                    </p>
+                </div>
+                {% else %}
+                <div class="text p-4">
+                    <h3>{{ item.name }} - {{ item.score }} ⭐</h3>
+                    <p>{{ item.material }}</p>
+                    <p class="price"><span>{{ item.price|intcomma }}</span> 
+                        <a href="#" class="ml-2 btn btn-white btn-outline-white">Order</a>
+                    </p>
+                </div>
+                <a href="#" class="img order-lg-last" style="background-image: url('{{ item.image.url }}');"></a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

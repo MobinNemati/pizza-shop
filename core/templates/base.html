@@ -8,7 +8,7 @@
 <html lang="en">
 
 <head>
-    <title>Pizza - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Roid Restaurant</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -34,29 +34,68 @@
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base1.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <a href="{% url 'menu:order-list' %}"><i class='fas fa-shopping-basket fa-2x'></i></a>
         <div class="container">
-            <a class="navbar-brand" href="index.html"><span
-                    class="flaticon-pizza-1 mr-1"></span>Pizza<br><small>Delicous</small></a>
+            <a class="navbar-brand" href="{% url 'website:index' %}">
+                <span class="flaticon-pizza-1 mr-1"></span>Roid<br><small>For Ever</small>
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="oi oi-menu"></span> Menu
+                <span class="oi oi-website"></span> Menu
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="{% url 'menu:index' %}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{% url 'menu:menu' %}" class="nav-link">Menu</a></li>
-                    <li class="nav-item"><a href="{% url 'menu:services' %}" class="nav-link">Services</a></li>
-                    <li class="nav-item"><a href="{% url 'menu:blog' %}" class="nav-link">Blog</a></li>
-                    <li class="nav-item active"><a href="{% url 'menu:about' %}" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="{% url 'menu:contact' %}" class="nav-link">Contact</a></li>
+                    <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+                        <a href="{% url 'website:index' %}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/menu/' %}active{% endif %}">
+                        <a href="{% url 'menu:menu-list' %}" class="nav-link">Menu</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/services/' %}active{% endif %}">
+                        <a href="{% url 'website:services' %}" class="nav-link">Services</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/blog/' %}active{% endif %}">
+                        <a href="{% url 'website:blog' %}" class="nav-link">Blog</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/about/' %}active{% endif %}">
+                        <a href="{% url 'website:about' %}" class="nav-link">About</a>
+                    </li>
+                    <li class="nav-item {% if request.path == '/contact/' %}active{% endif %}">
+                        <a href="{% url 'website:contact' %}" class="nav-link">Contact</a>
+                    </li>
+
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a href="" class="nav-link">Logged in as {{request.user.phone_number}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:logout' %}" class="nav-link">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:profile' %}" class="nav-link">Profile</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:login' %}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:signup' %}" class="nav-link">Signup</a>
+                    </li>
+                    {% endif %}
+                    
                 </ul>
             </div>
         </div>
     </nav>
+    
+    
     <!-- END nav -->
 
 
@@ -67,40 +106,6 @@
 
     {% endblock content %}
 
-
-
-    <section class="ftco-appointment">
-        <div class="overlay"></div>
-        <div class="container-wrap">
-            <div class="row no-gutters d-md-flex align-items-center">
-                <div class="col-md-6 d-flex align-self-stretch">
-                    <div id="map"></div>
-                </div>
-                <div class="col-md-6 appointment ftco-animate">
-                    <h3 class="mb-3">Contact Us</h3>
-                    <form action="#" class="appointment-form">
-                        <div class="d-md-flex">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="First Name">
-                            </div>
-                        </div>
-                        <div class="d-me-flex">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Last Name">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="" id="" cols="30" rows="3" class="form-control"
-                                placeholder="Message"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Send" class="btn btn-primary py-3 px-4">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <footer class="ftco-footer ftco-section img">
         <div class="overlay"></div>
@@ -177,13 +182,7 @@
             <div class="row">
                 <div class="col-md-12 text-center">
 
-                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template
-                        is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                            target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
+                    <p> Created By Mobin Nemati </p>
                 </div>
             </div>
         </div>

@@ -1,0 +1,68 @@
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <style>
+        .quantity-box {
+            display: inline-flex;
+            align-items: center;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 1px 3px;
+            background-color: #f9f9f9;
+        }
+
+        .quantity-box form {
+            margin: 0 5px;
+        }
+
+        .quantity-box button {
+            background: none;
+            border: none;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .quantity-box button:hover {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>List of Orders</h1>
+    {% for order in orders %}
+        <h3>Username: {{ order.phone_number }}</h3>
+        <ul>
+            {% for order_item in order.orderitem_set.all %}
+                <li>
+                    {{ order_item.item.name }} 
+                    
+                    
+                    - Price: {{ order_item.item.price|intcomma }}
+                    <div class="quantity-box">
+                        <form action="{% url 'menu:decrease' order_item.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="color: red;">➖</button>
+                        </form>
+
+                        <span>{{ order_item.quantity }}</span>
+
+                        <form action="{% url 'menu:increase' order_item.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="color: green;">➕</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p><strong>Total Price:</strong> {{ order.total_price|intcomma }}</p>
+        <hr>
+    {% endfor %}
+</body>
+</html>

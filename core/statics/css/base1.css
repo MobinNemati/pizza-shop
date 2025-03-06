@@ -1,0 +1,29 @@
+/* تنظیمات لوگوی برند */
+.navbar .navbar-brand {
+    margin-right: 30px; /* فاصله بیشتر از سمت چپ */
+    font-weight: bold;
+    text-align: center;
+}
+
+/* تنظیمات سبد خرید */
+.navbar .navbar-cart {
+    margin-right: 15px;
+    font-size: 24px;
+    color: #ffc107; /* رنگ زرد */
+    text-decoration: none;
+}
+
+.navbar .navbar-cart:hover {
+    color: #ff8c00; /* تغییر رنگ هنگام هاور */
+}
+
+/* لینک‌های Login و Signup */
+.navbar .special-link {
+    font-weight: bold;
+    color: #ffc107; /* رنگ زرد */
+    transition: color 0.3s ease;
+}
+
+.navbar .special-link:hover {
+    color: #ff8c00; /* رنگ نارنجی هنگام هاور */
+}
