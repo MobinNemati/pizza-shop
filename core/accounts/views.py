@@ -6,7 +6,7 @@ from .models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.views import LogoutView, LoginView
 from django.contrib import messages
-from accounts.forms import SignUpForm
+from accounts.forms import SignUpForm, LoginForm
 from django.views import View
 
 
@@ -44,3 +44,31 @@ class SignUpView(View):
 
 
 
+class LoginView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('/')
+        form = LoginForm()
+        return render(request, 'registration/login.html', {'form':form})
+    
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            phone_number = form.cleaned_data['phone_number']
+            password = form.cleaned_data['password']
+            user = authenticate(request, phone_number=phone_number, password=password)
+            if user:
+                login(request, user)
+                return redirect('/accounts/profile')
+            else:
+                messages.error(request, 'Invalid username or password')
+
+
+        return render(request, 'registration/login.html', {'form': form})
+
+    
+class LogoutView(View, LoginRequiredMixin):
+
+    def get(self, request):
+        logout(request)
+        return redirect('/')

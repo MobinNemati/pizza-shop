@@ -71,7 +71,7 @@ class Profile(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.phone_number.phone_number
+        return self.phone_number.phone_numbera
     
 
 

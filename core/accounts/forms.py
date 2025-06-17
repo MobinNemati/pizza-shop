@@ -30,3 +30,8 @@ class SignUpForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class LoginForm(forms.Form):
+    phone_number = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)

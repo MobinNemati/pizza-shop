@@ -77,11 +77,11 @@
     </div>
 </section>
 
-<section class="ftco-section">
+<!-- <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
             <div class="col-md-7 heading-section ftco-animate text-center">
-                <h2 class="mb-4">Hot Meals</h2>
+                <h2 class="mb-4">Reservation</h2>
                 <p class="flip"><span class="deg1"></span><span class="deg2"></span><span class="deg3"></span></p>
                 <p class="mt-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
                     there
@@ -137,10 +137,89 @@
                     </div>
                 </div>
             </div>
+
+
+        </div>
+    </div>
+</section> -->
+
+
+<section class="ftco-section contact-section">
+    <div class="container mt-5">
+        <div class="row block-9">
+            <div class="col-md-4 contact-info ftco-animate">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <h2 class="h4">Contact Information</h2>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <p><span>Address:</span> In Front Of Estandard, Daneshgah Street</p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <p><span>Phone:</span> <a href="https://telegram.org/@mobin_nmati/">+98 902 882 0341</a></p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <p><span>Email:</span> <a href="mailto:mobin.custom@gmail.com">mobin.custom@gmail.com</a></p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <p><span>Website:</span> <a href="https://roidtop.ir">roidtop.ir</a></p>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <p><span>Pay attention:</span> <a href=""></a>if you want reserve more than 30 seat you should call the manger</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6 ftco-animate">
+                <form action="{% url 'website:services' %}" method="post" class="contact-form">
+                    {% csrf_token %}
+                
+
+                    {% if request.user.is_authenticated %}
+                        <input type="hidden" name="customer" value="{{ request.user.id }}">
+                    {% endif %}
+                
+                    <div class="form-group">
+                        {{ form.table_number.label_tag }}
+                        {{ form.table_number }}
+                    </div>
+                
+                    <div class="form-group">
+                        {{ form.seats.label_tag }}
+                        {{ form.seats }}
+                    </div>
+                
+                    <div class="form-group">
+                        {{ form.date.label_tag }}
+                        <input type="date" name="date" class="form-control">
+                    </div>
+                
+                    <div class="form-group">
+                        {{ form.time.label_tag }}
+                        <input type="time" name="time" class="form-control">
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary py-3 px-5">Reserve</button>
+
+                    <script>
+                        function showMessage(message) {
+                            alert(message);
+                        }
+                    </script>
+
+                    {% if messages %}
+                    <script>
+                        {% for message in messages %}
+                        showMessage("{{ message }}");
+                        {% endfor %}
+                    </script>
+                    {% endif %}
+                </form>
+                
+            </div>
         </div>
     </div>
 </section>
-
 
 
 {% endblock content %}

@@ -1,6 +1,8 @@
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
+from accounts.models import User
+
 
 
 
@@ -47,3 +49,48 @@ class Employee(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.role} - {self.phone_number}"
+
+
+
+
+class Reservation(models.Model):
+    customer = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+
+    TABLE_CHOICES = [
+        ('number', '11'),
+        ('number', '22'),
+        ('number', '33'),
+        ('number', '44'),
+        ('number', '55'),
+        ('number', '66'),
+        ('number', '77'),
+        ('number', '88'),
+        ('number', '99'),
+    ]
+    table_number = models.CharField(max_length=6, choices=TABLE_CHOICES)
+    seats = models.PositiveIntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(30)
+        ]
+    )
+    date = models.DateField()
+    time = models.TimeField()
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('confirmed', 'Confirmed'),
+        ('canceled', 'Canceled'),
+        ('not_Reserved', 'Not Reserved'),
+    ]
+
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default='not_Reserved')
+
+
+    is_available = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+            return f"{self.customer} - {self.table_number} - {self.is_available} - {self.status}"
